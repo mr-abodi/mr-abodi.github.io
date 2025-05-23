@@ -1,1 +1,20 @@
-Hello world
+Abdullah Alghamdi
+May 23, 2025
+ASL data
+
+Sign Language Detection Using Human Pose Estimation
+
+The research paper “Real-Time Sign Language Detection Using Human Pose Estimation” by Amit Moryossef and his team focuses on building a system that can detect when someone is using sign language in real time. Unlike sign language recognition (which tries to understand what someone is signing), this system simply detects if someone is signing or not. This is very useful for video meetings on platforms like Zoom, Teams, or Google Meet, where the camera usually focuses on people who are talking. Unfortunately, Deaf users who sign silently often don’t get seen by the system, so this tool helps fix that by making signers visible when they’re signing.
+
+The system was designed mainly for Deaf and signing individuals, to help them be seen and heard (visually) during virtual meetings. For example, if a Deaf student starts signing a response in a breakout room, this tool makes sure their video pops up on screen—just like someone else speaking out loud would.
+
+The researchers trained the system using the Public DGS Corpus, a large video dataset of German Sign Language. They used a pose detection tool called OpenPose to track hand, face, and body landmarks in each video frame. Then, they calculated motion (optical flow) between frames and used a type of neural network (LSTM) to decide whether the person is signing.
+
+The system runs fast—up to 285 frames per second—on regular CPUs, and the best model (using 137 body points) reached 91.5% accuracy. Even the smaller version, with just 25 body points, still did pretty well at 90.3%. One of the best things about this approach is that it doesn’t need high-quality video. Instead of analyzing every pixel, it just looks at the body’s movement, which is lighter and faster to process.
+
+Still, the system isn’t perfect. It sometimes makes errors like detecting signing too early, too late, or missing it altogether. Sometimes, expressive gestures (like face-touching or hand waves) get confused with real signing. Also, it only works with one signer per video, and the training data mostly comes from white European signers, so it might not work the same in more diverse settings.
+
+This research is very relevant to projects like Gallaudet’s ASL data efforts. It gives a model for how to analyze and measure sign detection, and it shows how to use pose tracking to work with sign language videos more efficiently. The study helps point the way toward better accessibility for signers in digital environments.
+
+Reference:
+Moryossef, A., Tsochantaridis, I., Aharoni, R., Ebling, S., & Narayanan, S. (2020). Real-Time Sign Language Detection Using Human Pose Estimation. https://doi.org/10.48550/arXiv.2008.04637
