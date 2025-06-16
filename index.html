@@ -69,27 +69,6 @@
 
     <!-- Chapter 1 -->
     <div class="chapter">
-      <div class="chapter-title">Deep Learning Approaches to Sign Language Recognition</div>
-      <div class="chapter-date">June 6, 2025</div>
-      <div class="description">
-        <strong>Weekend Coding Log:</strong><br><br>
-        Two key deep learning methods for sign language recognition are pose keypoint sequences and multi-modal classification. The pose-based approach uses skeletal points (hands, arms, body) fed into models like LSTMs or Transformers to detect signs. Ko et al. (2019) showed this method works well for Korean Sign Language and is efficient and privacy-friendly. However, it often misses facial expressions and detailed handshapes, especially when keypoints are poorly tracked. Multi-modal approaches, such as that by Saunders et al. (2020), combine video, keypoints, facial data, and optical flow for richer recognition. These models perform better in expressive communication but require more data, computation, and precise video quality. Overall, pose-based models are simpler and scalable, while multi-modal systems offer deeper understanding at higher cost.
-      </div>
-    </div>
-
-    <!-- Chapter 2 -->
-    <div class="chapter">
-      <div class="chapter-title">Sign Language Detection Using Human Pose Estimation</div>
-      <div class="chapter-date">May 30, 2025</div>
-      <div class="description">
-        This is what I research for ASL data: Sign Language Detection Using Human Pose Estimation. The paper “Real-Time Sign Language Detection Using Human Pose Estimation” by Amit Moryossef and team explores detecting whether someone is signing in real time—not recognizing signs, just detecting activity. It's important for making video calls more accessible for Deaf users by showing their video when they sign.<br><br>
-        They used the Public DGS Corpus with OpenPose tracking and neural networks (LSTM). The system is fast and accurate, even on standard CPUs. However, it still has limitations—like recognizing only one signer at a time and needing diverse training data.<br><br>
-        This research is a big step for improving digital accessibility and helps with efforts like Gallaudet’s ASL video tracking projects.
-      </div>
-    </div>
-
-    <!-- Chapter 3 -->
-    <div class="chapter">
       <div class="chapter-title">Weekend Coding Log</div>
       <div class="chapter-date">June 13, 2025</div>
       <div class="description">
@@ -97,6 +76,26 @@
         Eventually, I discovered that the root cause was missing model data—specifically, the keypoint models for the face and hands had not been downloaded. Once I located and installed the required MediaPipe assets, the code began to function correctly. This experience reminded me how crucial it is to check model dependencies early, especially when using holistic tracking systems that rely on multiple submodels.<br><br>
         While solving this issue felt like a win, I also found myself confused about the direction of my next steps. I wasn’t sure whether I should move forward by trying to <strong>cut video segments where signs stop and start</strong>, or whether I should focus more narrowly on <strong>fingerspelling detection</strong>, which seems to require finer control and precision.<br><br>
         This uncertainty is part of the process, but it highlights how important it is to balance technical troubleshooting with bigger-picture planning. I’ll continue experimenting and exploring which direction aligns best with the goals of the ASL tracking project.
+      </div>
+    </div>
+
+    <!-- Chapter 2 -->
+    <div class="chapter">
+      <div class="chapter-title">Deep Learning Approaches to Sign Language Recognition</div>
+      <div class="chapter-date">June 6, 2025</div>
+      <div class="description">
+        Two key deep learning methods for sign language recognition are pose keypoint sequences and multi-modal classification. The pose-based approach uses skeletal points (hands, arms, body) fed into models like LSTMs or Transformers to detect signs. Ko et al. (2019) showed this method works well for Korean Sign Language and is efficient and privacy-friendly. However, it often misses facial expressions and detailed handshapes, especially when keypoints are poorly tracked. Multi-modal approaches, such as that by Saunders et al. (2020), combine video, keypoints, facial data, and optical flow for richer recognition. These models perform better in expressive communication but require more data, computation, and precise video quality. Overall, pose-based models are simpler and scalable, while multi-modal systems offer deeper understanding at higher cost.
+      </div>
+    </div>
+
+    <!-- Chapter 3 -->
+    <div class="chapter">
+      <div class="chapter-title">Sign Language Detection Using Human Pose Estimation</div>
+      <div class="chapter-date">May 30, 2025</div>
+      <div class="description">
+        This is what I research for ASL data: Sign Language Detection Using Human Pose Estimation. The paper “Real-Time Sign Language Detection Using Human Pose Estimation” by Amit Moryossef and team explores detecting whether someone is signing in real time—not recognizing signs, just detecting activity. It's important for making video calls more accessible for Deaf users by showing their video when they sign.<br><br>
+        They used the Public DGS Corpus with OpenPose tracking and neural networks (LSTM). The system is fast and accurate, even on standard CPUs. However, it still has limitations—like recognizing only one signer at a time and needing diverse training data.<br><br>
+        This research is a big step for improving digital accessibility and helps with efforts like Gallaudet’s ASL video tracking projects.
       </div>
     </div>
 
