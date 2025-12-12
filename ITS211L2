@@ -1,0 +1,90 @@
+'''
+Abdullah Alghamdi
+Todd Bonheyo
+Dec 10, 2025
+'''
+
+
+#main_hotel.py
+
+from hotel_classes import Hotel, RoomNotAvailableError, CapacityError
+
+def print_menu():
+    print("\n--- Hotel Meeting Room Booking ---")
+    print("1. Show all rooms")
+    print("2. Create new booking")
+    print("3. Show all bookings")
+    print("4. Save bookings to file")
+    print("5. Exit")
+
+
+def show_rooms(hotel: Hotel):
+    if not hotel.rooms:
+        print("No rooms loaded.")
+        return
+    print("\nAvailable rooms:")
+    for room in hotel.rooms:
+        print(" -", room)
+
+
+def show_bookings(hotel: Hotel):
+    if not hotel.bookings:
+        print("No bookings yet.")
+        return
+    print(f"\nAll bookings for {hotel.name}:")
+    for booking in hotel.bookings:
+        print(" -", booking)
+    print(f"Total bookings: {len(hotel)}")   # uses __len__
+
+
+def create_booking_interactive(hotel: Hotel):
+    try:
+        company = input("Enter company name: ").strip()
+        room_number = input("Enter room number: ").strip()
+        num_people = int(input("Enter number of people: "))
+        hours = int(input("Enter number of hours: "))
+
+        new_booking = hotel.create_booking(company, room_number, num_people, hours)
+        print("Booking created successfully:")
+        print(new_booking)
+
+    except ValueError as ve:
+        print("Invalid input:", ve)
+    except CapacityError as ce:
+        print("Capacity error:", ce)
+    except RoomNotAvailableError as re:
+        print("Room error:", re)
+    except Exception as e:
+        # generic exception – for safety
+        print("An unexpected error occurred:", e)
+
+
+def main():
+    hotel_name = "Galaxy Conference Hotel"   # change to whatever you like
+    hotel = Hotel(hotel_name)
+
+    # Load rooms from file at start
+    hotel.load_rooms_from_file("rooms.txt")
+
+    while True:
+        print_menu()
+        choice = input("Choose an option: ").strip()
+
+        if choice == "1":
+            show_rooms(hotel)
+        elif choice == "2":
+            create_booking_interactive(hotel)
+        elif choice == "3":
+            show_bookings(hotel)
+        elif choice == "4":
+            hotel.save_bookings_to_file("bookings.txt")
+            print("Bookings saved to bookings.txt")
+        elif choice == "5":
+            print("Goodbye!")
+            break
+        else:
+            print("Invalid choice. Please try again.")
+
+
+if __name__ == "__main__":
+    main()
