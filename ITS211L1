@@ -1,1 +1,150 @@
+'''
+Abdullah Alghamdi
+Todd Bonheyo
+Dec 10, 2025
+'''
+
+
+#hotel_classes.py
+class RoomNotAvailableError(Exception):
+    """Raised when a room is not available for booking."""
+    pass
+
+class CapacityError(Exception):
+    """Raised when number of people exceeds room capacity."""
+    pass
+
+class Room:
+    def __init__(self, room_number: str, capacity: int, hourly_rate: float, max_hours: int):
+        self._room_number = room_number     # use _ to show "private"
+        self._capacity = capacity
+        self._hourly_rate = hourly_rate
+        self._max_hours = max_hours
+
+#Getters & setters (example for capacity)
+    @property
+    def room_number(self):
+        return self._room_number
+
+    @property
+    def capacity(self):
+        return self._capacity
+
+    @capacity.setter
+    def capacity(self, new_capacity: int):
+        if new_capacity <= 0:
+            raise ValueError("Capacity must be positive.")
+        self._capacity = new_capacity
+
+    @property
+    def hourly_rate(self):
+        return self._hourly_rate
+
+    @property
+    def max_hours(self):
+        return self._max_hours
+
+    # Magic method for printing
+    def __str__(self) -> str:
+        return f"Room {self._room_number} (capacity: {self._capacity}, rate: ${self._hourly_rate}/hr, max {self._max_hours} hrs)"
+
+
+class Booking:
+    def __init__(self, company_name: str, room: Room, num_people: int, hours: int):
+        if num_people > room.capacity:
+            raise CapacityError("Number of people exceeds room capacity.")
+        if hours > room.max_hours:
+            raise ValueError("Requested hours exceed maximum allowed for this room.")
+
+        self.company_name = company_name
+        self.room = room
+        self.num_people = num_people
+        self.hours = hours
+        self.total_cost = self.hours * self.room.hourly_rate
+
+    # Magic method for printing
+    def __str__(self) -> str:
+        return (f"Booking for {self.company_name} in Room {self.room.room_number} - "
+                f"{self.num_people} people for {self.hours} hours, total ${self.total_cost:.2f}")
+
+
+class Hotel:
+    def __init__(self, name: str):
+        self.name = name
+        self.rooms = []        # list[Room]
+        self.bookings = []     # list[Booking]
+
+#Magic method: len(hotel) gives number of bookings
+    def __len__(self):
+        return len(self.bookings)
+
+    def add_room(self, room: Room):
+        self.rooms.append(room)
+
+    def find_room(self, room_number: str):
+        for room in self.rooms:
+            if room.room_number == room_number:
+                return room
+        return None
+
+    def is_room_available(self, room_number: str) -> bool:
+        """
+        Simple version: if room already has a booking, mark as unavailable.
+        (You can improve this later with dates/times.)
+        """
+        for booking in self.bookings:
+            if booking.room.room_number == room_number:
+                return False
+        return True
+
+    def create_booking(self, company_name: str, room_number: str, num_people: int, hours: int) -> Booking:
+        room = self.find_room(room_number)
+        if room is None:
+            raise RoomNotAvailableError("Room does not exist.")
+
+        if not self.is_room_available(room_number):
+            raise RoomNotAvailableError("Room is not available for booking.")
+
+        new_booking = Booking(company_name, room, num_people, hours)
+        self.bookings.append(new_booking)
+        return new_booking
+
+#File I/O examples
+
+    def load_rooms_from_file(self, filename: str):
+        """
+        Expected file format per line:
+        room_number,capacity,hourly_rate,max_hours
+        Example:
+        A101,50,75.0,4
+        """
+        try:
+            with open(filename, "r") as f:
+                for line in f:
+                    line = line.strip()
+                    if not line:
+                        continue
+                    parts = line.split(",")
+                    if len(parts) != 4:
+                        #bad line format – skip or raise an error
+                        continue
+                    room_number, cap_str, rate_str, max_hours_str = parts
+                    capacity = int(cap_str)
+                    hourly_rate = float(rate_str)
+                    max_hours = int(max_hours_str)
+                    room = Room(room_number, capacity, hourly_rate, max_hours)
+                    self.add_room(room)
+        except FileNotFoundError:
+            print(f"Error: Could not find file '{filename}'.")
+
+    def save_bookings_to_file(self, filename: str):
+        """
+        Save all bookings into a text file.
+        """
+        try:
+            with open(filename, "w") as f:
+                for b in self.bookings:
+                    f.write(f"{b.company_name},{b.room.room_number},{b.num_people},{b.hours},{b.total_cost:.2f}\n")
+        except OSError as e:
+            print("Error writing to file:", e)
 
